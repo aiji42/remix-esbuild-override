@@ -1,0 +1,9 @@
+{
+  "name": "remix-esbuild-override",
+  "version": "1.0.0",
+  "description": "This library allows Remix compiler (esbuild) settings to be overridden.",
+  "main": "index.js",
+  "repository": "https://github.com/aiji42/remix-esbuild-override.git",
+  "author": "aiji42 <aiji42@gmail.com> (https://twitter.com/aiji42_dev)",
+  "license": "MIT"
+}
