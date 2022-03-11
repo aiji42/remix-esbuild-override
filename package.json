@@ -6,7 +6,13 @@
   "repository": "https://github.com/aiji42/remix-esbuild-override.git",
   "author": "aiji42 <aiji42@gmail.com> (https://twitter.com/aiji42_dev)",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier -w src",
+    "prepare": "husky install"
+  },
   "devDependencies": {
+    "husky": "^7.0.4",
     "prettier": "^2.5.1",
     "typescript": "^4.6.2"
   }
