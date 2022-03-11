@@ -11,6 +11,13 @@
     "format": "prettier -w src",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "esbuild-org": "npm:esbuild@0.14.22"
+  },
+  "peerDependencies": {
+    "remix": ">=1.2.3",
+    "@remix-run/dev": ">=1.2.3"
+  },
   "devDependencies": {
     "husky": "^7.0.4",
     "prettier": "^2.5.1",
