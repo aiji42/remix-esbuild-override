@@ -10,7 +10,7 @@ This is a library that makes it possible to change the configuration values of t
 For example, Next.js allows you to control webpack option values from a configuration file (`next.config.js`).
 Remix does not have that functionality. A member of the development team says in a [PR comment](https://github.com/remix-run/remix/pull/2168#issuecomment-1058193715) that this is because exposing the configuration values would lock in the compiler's choices and also risk breaking the application.
 I support that argument, but in actual use cases, I often want to change the settings.
-So I decided to provide that functionality outside of Remix (in this third-party library).
+So I decided to provide that functionality outside of Remix (in this 3rd-party library).
 
 ## Install
 
@@ -26,13 +26,12 @@ Add `remix-esbuild-override` to `scripts.postinstall` in package.json.
 
 ```json
 "scripts": {
-  "postinstall": "yarn remix setup cloudflare-workers && yarn remix-esbuild-override",
-  ...
+  "postinstall": "yarn remix setup cloudflare-workers && yarn remix-esbuild-override"
 }
 ```
 This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
 
-:memo: MEMO: When you run `remix-esbuild-override`, esbuild in node_modules will be replaced with an alias, and when resolving esbuild in the Reimx compiler script, a proxy script for this library will be called, giving your configuration values The original esbuild is then called.
+:memo: MEMO: When you run `remix-esbuild-override`, the esbuild in node_modules is replaced by an alias; when resolving the esbuild in the Reimx compiler script, it is not the original esbuild but this library's The proxy script is called. Your configuration values are then added and the original esbuild is called.
 
 ## How to use
 
