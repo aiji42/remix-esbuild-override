@@ -1,5 +1,3 @@
-[![npm version](https://badge.fury.io/js/remix-esbuild-override.svg)](https://badge.fury.io/js/remix-esbuild-override)
-
 # :minidisc: remix-esbuild-override
 
 :warning: While I believe you will most likely get a lot of benefit from using this library, it can sometimes destroy your product.
