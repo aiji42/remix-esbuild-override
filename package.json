@@ -4,7 +4,9 @@
   "description": "This library allows Remix compiler (esbuild) settings to be overridden.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "repository": "https://github.com/aiji42/remix-esbuild-override.git",
   "author": "aiji42 <aiji42@gmail.com> (https://twitter.com/aiji42_dev)",
   "license": "MIT",
@@ -14,10 +16,12 @@
     "prepare": "husky install"
   },
   "peerDependencies": {
-    "remix": ">=1.2.0",
-    "@remix-run/dev": ">=1.2.0"
+    "@remix-run/dev": ">=1.2.0",
+    "remix": ">=1.2.0"
   },
   "devDependencies": {
+    "@remix-run/dev": "^1.2.3",
+    "@types/node": "^17.0.21",
     "esbuild-org": "npm:esbuild@0.14.22",
     "husky": "^7.0.4",
     "prettier": "^2.5.1",
