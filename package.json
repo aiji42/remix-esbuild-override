@@ -7,6 +7,9 @@
   "files": [
     "dist"
   ],
+  "bin": {
+    "dist/bin/index.js": "remix-esbuild-override"
+  },
   "repository": "https://github.com/aiji42/remix-esbuild-override.git",
   "author": "aiji42 <aiji42@gmail.com> (https://twitter.com/aiji42_dev)",
   "license": "MIT",
