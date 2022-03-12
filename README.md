@@ -33,7 +33,7 @@ Add `remix-esbuild-override` to `scripts.postinstall` in package.json.
 ```
 This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
 
-:memo: MEMO: When you run `remix-esbuild-override`, the esbuild in node_modules is replaced by an alias; when resolving the esbuild in the Reimx compiler script, it is not the original esbuild but this library's The proxy script is called. Your configuration values are then added and the original esbuild is called.
+:memo: MEMO: When you run `remix-esbuild-override`, the esbuild in node_modules is replaced by an alias; when resolving the esbuild in the Reimx compiler script, it is not the original esbuild but this library's proxy script is called. Your configuration values are then added and the original esbuild is called.
 
 ## How to use
 
