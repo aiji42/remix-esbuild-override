@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/remix-esbuild-override.svg)](https://badge.fury.io/js/remix-esbuild-override)
+
 # :minidisc: remix-esbuild-override
 
 :warning: While I believe you will most likely get a lot of benefit from using this library, it can sometimes destroy your product.
@@ -14,6 +16,8 @@ So I decided to provide that functionality outside of Remix (in this 3rd-party l
 
 ## Install
 
+1. Install `remix-esbuild-override`
+
 ```bash
 # npm
 npm install -D remix-esbuild-override
@@ -22,7 +26,7 @@ npm install -D remix-esbuild-override
 yarn add -D remix-esbuild-override
 ```
 
-Add `remix-esbuild-override` to `scripts.postinstall` in package.json.
+2. Add `remix-esbuild-override` to `scripts.postinstall` in package.json.
 
 ```json
 "scripts": {
@@ -30,6 +34,8 @@ Add `remix-esbuild-override` to `scripts.postinstall` in package.json.
 }
 ```
 This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
+
+3. Run `npm install` or `yarn install` again to run `postinstall`
 
 :memo: MEMO: When you run `remix-esbuild-override`, the esbuild in node_modules is replaced by an alias; when resolving the esbuild in the Reimx compiler script, it is not the original esbuild but this library's proxy script is called. Your configuration values are then added and the original esbuild is called.
 
@@ -65,7 +71,7 @@ module.exports = {
 };
 ```
 
-:memo: NOTE: The code is compiled twice, once for the server and once for the browser.
+:memo: NOTE: Compilation is executed twice, once for the server and once for the browser.
 
 ### For example
 
