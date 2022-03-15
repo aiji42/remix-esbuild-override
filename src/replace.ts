@@ -2,7 +2,7 @@ import { execSync } from "node:child_process";
 
 export const replaceEsbuild = () => {
   const isOverridden = require
-    .resolve("esbuildあ")
+    .resolve("esbuild")
     .endsWith("remix-esbuild-override/dist/index.js");
   if (isOverridden) {
     console.log(
