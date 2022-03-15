@@ -123,7 +123,7 @@ module.exports = {
 ## If `postinstall` fails
 
 If you are building a project in a monorepo such as `yarn workspace`, esbuild replacement in `postinstall` may fail.  
-Update the scripts in package.json so that the `esbuild-plugin-alias` is executed before the `remix build` is run.
+Update the scripts in package.json so that the `remix-esbuild-override` is executed before the `remix build` is run.
 
 ```diff
    "scripts": {
