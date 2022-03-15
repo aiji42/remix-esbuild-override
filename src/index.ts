@@ -1,4 +1,5 @@
 export * from "esbuild-org";
+export { replaceEsbuild } from "./replace";
 import { build as buildOrg, BuildOptions } from "esbuild-org";
 import { resolve } from "path";
 import { AppConfig as AppConfigOrg } from "@remix-run/dev";

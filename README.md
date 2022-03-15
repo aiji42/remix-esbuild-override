@@ -120,3 +120,20 @@ module.exports = {
 };
 ```
 
+## If `postinstall` fails
+
+If you are building a project in a monorepo such as `yarn workspace`, esbuild replacement in `postinstall` may fail.  
+You can run the replacement script when remix.config.js is loaded (when dev or build is run) instead of postinstalling the esbuild replacement.
+
+```js
+// remix.config.js
+const { replaceEsbuild } = require("remix-esbuild-override");
+replaceEsbuild();
+
+/**
+ * @type {import('remix-esbuild-override').AppConfig}
+ */
+module.exports = {
+  serverBuildTarget: "cloudflare-workers",
+  // ...
+```

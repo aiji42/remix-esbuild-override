@@ -1,31 +1,12 @@
 #!/usr/bin/env node
-import { execSync } from "node:child_process";
+import { replaceEsbuild } from "../replace";
 
-const isOverridden = require
-  .resolve("esbuild")
-  .endsWith("remix-esbuild-override/dist/index.js");
-if (isOverridden) {
+try {
+  replaceEsbuild();
+} catch (e) {
+  if (e instanceof Error)
+    console.warn("💽 Skipped esbuild replacement:", e.message);
   console.log(
-    "esbuild has already been replaced. Your custom config can be used to build for Remix💡"
-  );
-} else {
-  const [originalEsbuildPath] =
-    require.resolve("esbuild").match(/^.*\/esbuild/) ?? [];
-  const [linkedEsbuildPath] =
-    require
-      .resolve("remix-esbuild-override")
-      .match(/^.*\/remix-esbuild-override/) ?? [];
-
-  execSync(
-    `mv ${originalEsbuildPath} ${originalEsbuildPath.replace(
-      /esbuild$/,
-      "esbuild-org"
-    )}`
-  );
-
-  execSync(`ln -s ${linkedEsbuildPath} ${originalEsbuildPath}`);
-
-  console.log(
-    "Replaced esbuild. Your custom config can be used to build for Remix💡"
+    "💽 Please read https://github.com/aiji42/remix-esbuild-override#if-postinstall-fails"
   );
 }
