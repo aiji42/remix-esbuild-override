@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import replaceEsbuild from "../replace";
+import { replaceEsbuild } from "../replace";
 
 try {
   replaceEsbuild(false);

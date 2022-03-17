@@ -1,6 +1,6 @@
 import { execSync, spawn } from "node:child_process";
 
-const replaceEsbuild = (restartable = true) => {
+export const replaceEsbuild = (restartable = true) => {
   const isOverridden = require
     .resolve("esbuild")
     .endsWith("remix-esbuild-override/dist/index.js");
@@ -32,8 +32,6 @@ const replaceEsbuild = (restartable = true) => {
     if (restartable) restartOnce();
   }
 };
-
-export default replaceEsbuild;
 
 const restartOnce = () => {
   if (process.env.restarting)
