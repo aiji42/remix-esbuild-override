@@ -4058,10 +4058,9 @@ remark-rehype@^9.0.0:
     mdast-util-to-hast "^11.0.0"
     unified "^10.0.0"
 
-remix-esbuild-override@1.1.0-beta.2:
-  version "1.1.0-beta.2"
-  resolved "https://registry.yarnpkg.com/remix-esbuild-override/-/remix-esbuild-override-1.1.0-beta.2.tgz#475f22c3bff71329e58c75932b120df083ae253b"
-  integrity sha512-SLoZHg1a0XcS6bbvEvyfXtkVGir6Pkfzxw4zxITButEUc8PWCgk4WDhHfOoBONC05Zw3VEKec3c9PWhBmtg3tg==
+"remix-esbuild-override@link:..":
+  version "0.0.0"
+  uid ""
 
 remix@^1.2.3:
   version "1.2.3"
