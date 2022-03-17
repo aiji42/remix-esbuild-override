@@ -30,7 +30,7 @@ yarn add -D remix-esbuild-override
 
 ```json
 "scripts": {
-  "postinstall": "yarn remix setup cloudflare-workers && yarn remix-esbuild-override"
+  "postinstall": "remix setup cloudflare-workers && remix-esbuild-override"
 }
 ```
 This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
@@ -123,18 +123,17 @@ module.exports = {
 ## If `postinstall` fails
 
 If you are building a project in a monorepo such as `yarn workspace`, esbuild replacement in `postinstall` may fail.  
-Update the scripts in package.json so that the `remix-esbuild-override` is executed before the `remix build` is run.
+If you call `replaceEsbuild` in remix.config.js as follows, it will replace esbuild once when the remix process is launched.
 
-```diff
-   "scripts": {
-     "postinstall": "yarn remix setup cloudflare-workers",
--    "build": "cross-env NODE_ENV=production remix build",
-+    "build": "yarn yarn remix-esbuild-override && yarn cross-env NODE_ENV=production remix build",
-     "dev:remix": "cross-env NODE_ENV=development remix watch",
-     "dev:miniflare": "cross-env NODE_ENV=development miniflare ./build/index.js --watch",
--    "dev": "cross-env NODE_ENV=development remix build && run-p dev:*",
-+    "dev": "yarn yarn remix-esbuild-override && cross-env NODE_ENV=development remix build && run-p dev:*",
-     "start": "cross-env NODE_ENV=production miniflare ./build/index.js",
-     "deploy": "npm run build && wrangler publish"
-   },
+```js
+// remix.config.js
+const { replaceEsbuild } = require("remix-esbuild-override/dist/replace");
+
+replaceEsbuild();
+
+/**
+ * @type {import('remix-esbuild-override').AppConfig}
+ */
+module.exports = {
+  serverBuildTarget: "cloudflare-workers",
 ```

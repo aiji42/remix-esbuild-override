@@ -1,5 +1,8 @@
 const path = require("node:path");
 const alias = require("esbuild-plugin-alias");
+const { replaceEsbuild } = require("remix-esbuild-override/dist/replace");
+
+replaceEsbuild();
 
 /**
  * @type {import('remix-esbuild-override').AppConfig}
