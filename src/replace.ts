@@ -1,4 +1,4 @@
-import { execSync, spawn } from "node:child_process";
+import node_child_process_1, { execSync, spawn } from "node:child_process";
 
 export const replaceEsbuild = (restartable = true) => {
   const isOverridden = require
@@ -16,14 +16,16 @@ export const replaceEsbuild = (restartable = true) => {
         .resolve("remix-esbuild-override")
         .match(/^.*\/remix-esbuild-override/) ?? [];
 
-    execSync(
-      `mv ${originalEsbuildPath} ${originalEsbuildPath.replace(
-        /esbuild$/,
-        "esbuild-org"
-      )}`
+    const replacedOriginalEsbuildPath = originalEsbuildPath.replace(
+      /esbuild$/,
+      "esbuild-org"
     );
+    execSync(`mv ${originalEsbuildPath} ${replacedOriginalEsbuildPath}`);
 
     execSync(`ln -s ${linkedEsbuildPath} ${originalEsbuildPath}`);
+    execSync(
+      `mkdir ${linkedEsbuildPath}/bin && ln -s ${replacedOriginalEsbuildPath}/bin/esbuild ${linkedEsbuildPath}/bin/esbuild`
+    );
 
     console.log(
       "💽 Replaced esbuild. Your custom config can be used to build for Remix"
