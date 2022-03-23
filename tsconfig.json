@@ -7,7 +7,11 @@
     "declaration": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest/globals"]
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "exclude": [
+    "./src/__tests__"
+  ]
 }
