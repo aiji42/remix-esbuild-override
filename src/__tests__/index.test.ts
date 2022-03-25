@@ -2,7 +2,6 @@ import { build } from "../index";
 import fs from "fs-extra";
 import path from "path";
 import * as Esbuild from "esbuild-org";
-import { beforeEach, describe } from "vitest";
 
 vi.mock("esbuild-org", () => ({
   build: vi.fn(),
@@ -29,6 +28,11 @@ describe("index", () => {
   });
 
   describe("build", () => {
+    test("load config error", async () => {
+      prepareConfig(undefined);
+      expect(build({})).rejects.toThrowError("Error loading Remix config in");
+    });
+
     // TODO: need vi.resetModules()
     test.skip("not override", async () => {
       prepareConfig(`
@@ -38,12 +42,6 @@ describe("index", () => {
       await build({});
 
       expect(mock).toBeCalledWith({});
-    });
-
-    // TODO: need vi.resetModules()
-    test.skip("load config error", async () => {
-      prepareConfig(undefined);
-      expect(build({})).toThrowError();
     });
 
     describe("override", () => {
