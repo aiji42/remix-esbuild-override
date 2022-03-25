@@ -1,30 +1,34 @@
-import node_child_process_1, { execSync, spawn } from "node:child_process";
+import { spawn } from "node:child_process";
+import { renameSync, symlinkSync, mkdirSync } from "fs";
+import { resolvePath } from "./utils";
+
+const esbuildOverrideMainPath = "remix-esbuild-override/dist/index.js";
 
 export const replaceEsbuild = (restartable = true) => {
-  const isOverridden = require
-    .resolve("esbuild")
-    .endsWith("remix-esbuild-override/dist/index.js");
+  const isOverridden = resolvePath("esbuild").endsWith(esbuildOverrideMainPath);
   if (isOverridden) {
     console.log(
       "💽 esbuild has already been replaced. Your custom config can be used to build for Remix"
     );
   } else {
     const [originalEsbuildPath] =
-      require.resolve("esbuild").match(/^.*\/esbuild/) ?? [];
-    const [linkedEsbuildPath] =
-      require
-        .resolve("remix-esbuild-override")
-        .match(/^.*\/remix-esbuild-override/) ?? [];
+      resolvePath("esbuild").match(/^.*\/esbuild/) ?? [];
+    const [esbuildOverridePath] =
+      resolvePath("remix-esbuild-override").match(
+        /^.*\/remix-esbuild-override/
+      ) ?? [];
 
     const replacedOriginalEsbuildPath = originalEsbuildPath.replace(
       /esbuild$/,
       "esbuild-org"
     );
-    execSync(`mv ${originalEsbuildPath} ${replacedOriginalEsbuildPath}`);
 
-    execSync(`ln -s ${linkedEsbuildPath} ${originalEsbuildPath}`);
-    execSync(
-      `mkdir ${linkedEsbuildPath}/bin && ln -s ${replacedOriginalEsbuildPath}/bin/esbuild ${linkedEsbuildPath}/bin/esbuild`
+    renameSync(originalEsbuildPath, replacedOriginalEsbuildPath);
+    symlinkSync(esbuildOverridePath, originalEsbuildPath);
+    mkdirSync(`${esbuildOverridePath}/bin`);
+    symlinkSync(
+      `${replacedOriginalEsbuildPath}/bin/esbuild`,
+      `${esbuildOverridePath}/bin/esbuild`
     );
 
     console.log(
