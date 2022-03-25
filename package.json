@@ -33,6 +33,7 @@
     "esbuild-org": "npm:esbuild@0.14.22",
     "fs-extra": "^10.0.1",
     "husky": "^7.0.4",
+    "memfs": "^3.4.1",
     "prettier": "^2.5.1",
     "semantic-release": "^19.0.2",
     "semantic-release-cli": "^5.4.4",

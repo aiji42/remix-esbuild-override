@@ -7,7 +7,7 @@ vi.mock("esbuild-org", () => ({
   build: vi.fn(),
 }));
 
-const tempPath = path.join(__dirname, "../..", "tmp");
+const tempPath = path.join(__dirname, "tmp");
 const oldEnv = { ...process.env };
 
 const prepareConfig = (script: string | undefined) => {

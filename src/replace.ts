@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { renameSync, symlinkSync, mkdirSync } from "fs";
+import { renameSync, symlinkSync, mkdirSync } from "node:fs";
 import { resolvePath } from "./utils";
 
 const esbuildOverrideMainPath = "remix-esbuild-override/dist/index.js";
