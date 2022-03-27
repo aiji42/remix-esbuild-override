@@ -3,7 +3,6 @@ const alias = require("esbuild-plugin-alias");
 const { withEsbuildOverride } = require("remix-esbuild-override");
 
 withEsbuildOverride((option, { isServer }) => {
-  console.log(option);
   option.jsxFactory = "jsx";
   option.inject = [path.resolve(__dirname, "reactShims.ts")];
   option.plugins = [
