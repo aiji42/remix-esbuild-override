@@ -7,6 +7,7 @@ vi.mock("fs", () => fs);
 const mockedConsoleLog = vi.spyOn(console, "log");
 
 beforeEach(() => {
+  vi.spyOn(utils, "restartOnce").mockImplementation(vi.fn());
   vol.reset();
 });
 afterEach(() => {
@@ -33,7 +34,7 @@ test("replace esbuild by remix-esbuild-override", () => {
     "/app"
   );
 
-  replaceEsbuild(false);
+  replaceEsbuild();
 
   expect(
     vol.readFileSync("/app/node_modules/esbuild/dist/index.js", "utf8")
@@ -53,7 +54,7 @@ test("already replaced", () => {
     "node_modules/remix-esbuild-override/dist/index.js"
   );
 
-  replaceEsbuild(false);
+  replaceEsbuild();
   expect(mockedConsoleLog).toBeCalledWith(
     expect.stringMatching(/esbuild has already been replaced/)
   );

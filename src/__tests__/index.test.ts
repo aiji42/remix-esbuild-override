@@ -1,106 +1,69 @@
-import { build } from "../index";
-import fs from "fs-extra";
-import path from "path";
+import { build, withEsbuildOverride } from "../index";
 import * as Esbuild from "esbuild-org";
 
 vi.mock("esbuild-org", () => ({
   build: vi.fn(),
 }));
-
-const tempPath = path.join(__dirname, "tmp");
-const oldEnv = { ...process.env };
-
-const prepareConfig = (script: string | undefined) => {
-  fs.removeSync(tempPath);
-  if (!script) return;
-  fs.mkdirSync(tempPath);
-  fs.writeFileSync(path.join(tempPath, "remix.config.js"), script);
-};
+vi.mock("../replace", () => ({
+  replaceEsbuild: vi.fn(),
+}));
 
 describe("index", () => {
-  beforeEach(() => {
-    vi.resetAllMocks();
-    process.env = { ...oldEnv, REMIX_ROOT: tempPath.toString() };
-  });
   afterEach(() => {
-    process.env = oldEnv;
-    fs.removeSync(tempPath);
+    vi.resetAllMocks();
   });
 
   describe("build", () => {
-    test("load config error", async () => {
-      prepareConfig(undefined);
-      expect(build({})).rejects.toThrowError("Error loading Remix config in");
+    const mock = vi.spyOn(Esbuild, "build");
+    beforeAll(() => {
+      withEsbuildOverride((option, { isServer, isDev }) => {
+        // @ts-ignore
+        option.runtime = isServer ? "server" : "browser";
+        // @ts-ignore
+        option.mode = isDev ? "development" : "production";
+        return option;
+      });
     });
 
-    // TODO: need vi.resetModules()
-    test.skip("not override", async () => {
-      prepareConfig(`
-          module.exports = {}
-        `);
-      const mock = vi.spyOn(Esbuild, "build");
+    test("production/browser", async () => {
       await build({});
 
-      expect(mock).toBeCalledWith({});
+      expect(mock).toBeCalledWith({ mode: "production", runtime: "browser" });
     });
 
-    describe("override", () => {
-      beforeEach(() => {
-        prepareConfig(`
-          module.exports = {
-            esbuildOverride: (option, { isServer, isDev }) => {
-              option.runtime = isServer ? "server" : "browser"
-              option.mode = isDev ? "development" : "production"
-              return option
-            }
-          }
-        `);
+    test("production/server", async () => {
+      await build({ write: false });
+
+      expect(mock).toBeCalledWith({
+        mode: "production",
+        runtime: "server",
+        write: false,
+      });
+    });
+
+    test("development/browser", async () => {
+      await build({
+        define: { "process.env.NODE_ENV": "development" },
       });
 
-      test("production/browser", async () => {
-        const mock = vi.spyOn(Esbuild, "build");
-        await build({});
+      expect(mock).toBeCalledWith({
+        mode: "development",
+        runtime: "browser",
+        define: { "process.env.NODE_ENV": "development" },
+      });
+    });
 
-        expect(mock).toBeCalledWith({ mode: "production", runtime: "browser" });
+    test("development/server", async () => {
+      await build({
+        write: false,
+        define: { "process.env.NODE_ENV": "development" },
       });
 
-      test("production/server", async () => {
-        const mock = vi.spyOn(Esbuild, "build");
-        await build({ write: false });
-
-        expect(mock).toBeCalledWith({
-          mode: "production",
-          runtime: "server",
-          write: false,
-        });
-      });
-
-      test("development/browser", async () => {
-        const mock = vi.spyOn(Esbuild, "build");
-        await build({
-          define: { "process.env.NODE_ENV": "development" },
-        });
-
-        expect(mock).toBeCalledWith({
-          mode: "development",
-          runtime: "browser",
-          define: { "process.env.NODE_ENV": "development" },
-        });
-      });
-
-      test("development/server", async () => {
-        const mock = vi.spyOn(Esbuild, "build");
-        await build({
-          write: false,
-          define: { "process.env.NODE_ENV": "development" },
-        });
-
-        expect(mock).toBeCalledWith({
-          mode: "development",
-          runtime: "server",
-          write: false,
-          define: { "process.env.NODE_ENV": "development" },
-        });
+      expect(mock).toBeCalledWith({
+        mode: "development",
+        runtime: "server",
+        write: false,
+        define: { "process.env.NODE_ENV": "development" },
       });
     });
   });

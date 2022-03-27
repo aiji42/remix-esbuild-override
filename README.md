@@ -16,8 +16,6 @@ So I decided to provide that functionality outside of Remix (in this 3rd-party l
 
 ## Install
 
-1. Install `remix-esbuild-override`
-
 ```bash
 # npm
 npm install -D remix-esbuild-override
@@ -26,48 +24,36 @@ npm install -D remix-esbuild-override
 yarn add -D remix-esbuild-override
 ```
 
-2. Add `remix-esbuild-override` to `scripts.postinstall` in package.json.
-
-```json
-"scripts": {
-  "postinstall": "remix setup cloudflare-workers && remix-esbuild-override"
-}
-```
-This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
-
-3. Run `npm install` or `yarn install` again to run `postinstall`
-
-:memo: MEMO: When you run `remix-esbuild-override`, the esbuild in node_modules is replaced by an alias; when resolving the esbuild in the Reimx compiler script, it is not the original esbuild but this library's proxy script is called. Your configuration values are then added and the original esbuild is called.
-
 ## How to use
 
 You can define function properties in `remix.config.js` that can override esbuild configuration values.
 
 ```js
 // remix.config.js
+const { withEsbuildOverride } = require("remix-esbuild-override");
 
 /**
- * @type {import('remix-esbuild-override').AppConfig}
+ * Define callbacks for the arguments of withEsbuildOverride.
+ * @param option - Default configuration values defined by the remix compiler
+ * @param isServer - True for server compilation, false for browser compilation
+ * @param isDev - True during development.
+ * @return {EsbuildOption} - You must return the updated option
+ */
+withEsbuildOverride((option, { isServer, isDev }) => {
+  // update the option
+  option.plugins = [
+    someEsbuildPlugin,
+    ...option.plugins
+  ]
+
+  return option;
+})
+
+/**
+ * @type {import('@remix-run/dev').AppConfig}
  */
 module.exports = {
-  serverBuildTarget: "cloudflare-workers",
-  // ...,
-
-  /**
-   * @param option - Default configuration values defined by the remix compiler
-   * @param isServer - True for server compilation, false for browser compilation
-   * @param isDev - True during development.
-   * @return {EsbuildOption} - You must return the updated option
-   */
-  esbuildOverride: (option, { isServer, isDev }) => {
-    // update the option
-    option.plugins = [
-      someEsbuildPlugin,
-      ...option.plugins
-    ]
-
-    return option;
-  },
+  // ...
 };
 ```
 
@@ -93,47 +79,31 @@ export { jsx, React };
 // remix.config.js
 const path = require("node:path");
 const alias = require("esbuild-plugin-alias");
+const { withEsbuildOverride } = require("remix-esbuild-override");
+
+withEsbuildOverride((option, { isServer }) => {
+  option.jsxFactory = "jsx";
+  option.inject = [path.resolve(__dirname, "reactShims.ts")];
+  option.plugins = [
+    alias({
+      through: require.resolve("no-op"),
+      "html-tokenize": require.resolve("no-op"),
+      multipipe: require.resolve("no-op"),
+    }),
+    ...option.plugins,
+  ];
+  if (isServer) option.mainFields = ["browser", "module", "main"];
+
+  return option;
+})
 
 /**
- * @type {import('remix-esbuild-override').AppConfig}
+ * @type {import('@remix-run/dev').AppConfig}
  */
 module.exports = {
   serverBuildTarget: "cloudflare-workers",
   server: "./server.js",
   devServerBroadcastDelay: 1000,
   ignoredRouteFiles: [".*"],
-  esbuildOverride: (option, { isServer }) => {
-    option.jsxFactory = "jsx";
-    option.inject = [path.resolve(__dirname, "reactShims.ts")];
-    option.plugins = [
-      alias({
-        through: require.resolve("no-op"),
-        "html-tokenize": require.resolve("no-op"),
-        multipipe: require.resolve("no-op"),
-      }),
-      ...option.plugins,
-    ];
-    if (isServer) option.mainFields = ["browser", "module", "main"];
-
-    return option;
-  },
 };
-```
-
-## If `postinstall` fails
-
-If you are building a project in a monorepo such as `yarn workspace`, esbuild replacement in `postinstall` may fail.  
-If you call `replaceEsbuild` in remix.config.js as follows, it will replace esbuild once when the remix process is launched.
-
-```js
-// remix.config.js
-const { replaceEsbuild } = require("remix-esbuild-override/dist/replace");
-
-replaceEsbuild();
-
-/**
- * @type {import('remix-esbuild-override').AppConfig}
- */
-module.exports = {
-  serverBuildTarget: "cloudflare-workers",
 ```

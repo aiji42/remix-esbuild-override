@@ -1,10 +1,9 @@
-import { spawn } from "node:child_process";
 import { renameSync, symlinkSync, mkdirSync } from "node:fs";
-import { resolvePath } from "./utils";
+import { resolvePath, restartOnce } from "./utils";
 
 const esbuildOverrideMainPath = "remix-esbuild-override/dist/index.js";
 
-export const replaceEsbuild = (restartable = true) => {
+export const replaceEsbuild = () => {
   const isOverridden = resolvePath("esbuild").endsWith(esbuildOverrideMainPath);
   if (isOverridden) {
     console.log(
@@ -35,17 +34,6 @@ export const replaceEsbuild = (restartable = true) => {
       "💽 Replaced esbuild. Your custom config can be used to build for Remix"
     );
 
-    if (restartable) restartOnce();
+    restartOnce();
   }
-};
-
-const restartOnce = () => {
-  if (process.env.restarting)
-    throw new Error("An unexpected error has occurred.");
-
-  console.log("💽 Auto restarting precess...");
-  spawn(process.argv[0], process.argv.slice(1), {
-    env: { restarting: "true" },
-    stdio: "ignore",
-  }).unref();
 };
