@@ -15,9 +15,11 @@ export type EsbuildOverride = (
 ) => EsbuildOption;
 
 let esbuildOverride: EsbuildOverride = (arg) => arg;
+
 export const withEsbuildOverride = (_esbuildOverride: EsbuildOverride) => {
   replaceEsbuild();
-  esbuildOverride = _esbuildOverride;
+  if (typeof _esbuildOverride === "function")
+    esbuildOverride = _esbuildOverride;
 };
 
 export const build = async (option: EsbuildOption) => {
