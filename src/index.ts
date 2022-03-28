@@ -1,6 +1,4 @@
-export * from "esbuild-org";
-import { build as buildOrg, BuildOptions } from "esbuild-org";
-import { replaceEsbuild } from "./replace";
+import type { BuildOptions } from "esbuild";
 
 type BrowserBuildOption = BuildOptions;
 type ServerBuildOption = BuildOptions & { write: false };
@@ -16,14 +14,35 @@ export type EsbuildOverride = (
 
 let esbuildOverride: EsbuildOverride = (arg) => arg;
 
-export const withEsbuildOverride = (_esbuildOverride: EsbuildOverride) => {
-  replaceEsbuild();
-  if (typeof _esbuildOverride === "function")
-    esbuildOverride = _esbuildOverride;
+export const withEsbuildOverride = (_esbuildOverride?: EsbuildOverride) => {
+  if (typeof _esbuildOverride !== "function") return;
+  esbuildOverride = _esbuildOverride;
+
+  for (const mod of ["esbuild", "@remix-run/dev/node_modules/esbuild"]) {
+    let esbuild;
+    try {
+      esbuild = require(mod);
+    } catch (_) {
+      continue;
+    }
+    if (esbuild && !esbuild.overridden) break;
+    const originalBuildFunction = esbuild.build;
+    Object.defineProperty(esbuild, "build", {
+      get: () => (option: EsbuildOption) => {
+        return originalBuildFunction(makeNewOption(option));
+      },
+      enumerable: true,
+    });
+    Object.defineProperty(esbuild, "overridden", {
+      value: true,
+      enumerable: true,
+    });
+    break;
+  }
 };
 
-export const build = async (option: EsbuildOption) => {
+const makeNewOption = (option: EsbuildOption) => {
   const isServer = option.write === false;
   const isDev = option.define?.["process.env.NODE_ENV"] === "development";
-  return buildOrg(esbuildOverride(option, { isServer, isDev }));
+  return esbuildOverride(option, { isServer, isDev });
 };
