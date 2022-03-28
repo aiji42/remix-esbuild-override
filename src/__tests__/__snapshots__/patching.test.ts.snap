@@ -1,0 +1,68 @@
+// Vitest Snapshot v1
+
+exports[`Only esbuild directly under node_modules 1`] = `
+{
+  "/app/node_modules/esbuild/lib/main.js": "
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+",
+  "/app/node_modules/esbuild/package.json": "{ \\"name\\": \\"esbuild\\", \\"main\\": \\"lib/main.js\\" }",
+}
+`;
+
+exports[`Only esbuild under @remix-run/dev 1`] = `
+{
+  "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js": "
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+",
+  "/app/node_modules/@remix-run/dev/node_modules/esbuild/package.json": "{ \\"name\\": \\"esbuild\\", \\"main\\": \\"lib/main.js\\" }",
+}
+`;
+
+exports[`esbuild exists in both 1`] = `
+{
+  "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js": "
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+",
+  "/app/node_modules/@remix-run/dev/node_modules/esbuild/package.json": "{ \\"name\\": \\"esbuild\\", \\"main\\": \\"lib/main.js\\" }",
+  "/app/node_modules/esbuild/lib/main.js": "
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+",
+  "/app/node_modules/esbuild/package.json": "{ \\"name\\": \\"esbuild\\", \\"main\\": \\"lib/main.js\\" }",
+}
+`;
