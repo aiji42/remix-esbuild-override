@@ -1,5 +1,6 @@
-import type { BuildOptions } from "esbuild";
+import { BuildOptions, build } from "esbuild";
 import * as console from "console";
+import { load } from "./utils";
 
 type BrowserBuildOption = BuildOptions;
 type ServerBuildOption = BuildOptions & { write: false };
@@ -20,17 +21,14 @@ export const withEsbuildOverride = (_esbuildOverride?: EsbuildOverride) => {
   esbuildOverride = _esbuildOverride;
 
   for (const mod of ["@remix-run/dev/node_modules/esbuild", "esbuild"]) {
-    let esbuild;
-    try {
-      esbuild = require(mod);
-    } catch (_) {
-      continue;
-    }
+    const esbuild = load<{ overridden?: boolean; build: typeof build }>(mod);
+    if (!esbuild) continue;
+
     if (esbuild.overridden) break;
     const originalBuildFunction = esbuild.build;
     Object.defineProperty(esbuild, "build", {
       get: () => (option: EsbuildOption) => {
-        return originalBuildFunction(makeNewOption(option));
+        return originalBuildFunction(esbuildOverrideOption(option));
       },
       enumerable: true,
     });
@@ -45,7 +43,7 @@ export const withEsbuildOverride = (_esbuildOverride?: EsbuildOverride) => {
   }
 };
 
-const makeNewOption = (option: EsbuildOption) => {
+export const esbuildOverrideOption = (option: EsbuildOption) => {
   const isServer = option.write === false;
   const isDev = option.define?.["process.env.NODE_ENV"] === "development";
   return esbuildOverride(option, { isServer, isDev });
