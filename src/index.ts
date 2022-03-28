@@ -18,14 +18,14 @@ export const withEsbuildOverride = (_esbuildOverride?: EsbuildOverride) => {
   if (typeof _esbuildOverride !== "function") return;
   esbuildOverride = _esbuildOverride;
 
-  for (const mod of ["esbuild", "@remix-run/dev/node_modules/esbuild"]) {
+  for (const mod of ["@remix-run/dev/node_modules/esbuild", "esbuild"]) {
     let esbuild;
     try {
       esbuild = require(mod);
     } catch (_) {
       continue;
     }
-    if (esbuild && !esbuild.overridden) break;
+    if (esbuild.overridden) break;
     const originalBuildFunction = esbuild.build;
     Object.defineProperty(esbuild, "build", {
       get: () => (option: EsbuildOption) => {
