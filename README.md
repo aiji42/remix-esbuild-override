@@ -24,6 +24,17 @@ npm install -D remix-esbuild-override
 yarn add -D remix-esbuild-override
 ```
 
+2. Add `remix-esbuild-override` to `scripts.postinstall` in package.json.
+
+```json
+"scripts": {
+  "postinstall": "remix setup cloudflare && remix-esbuild-override"
+}
+```
+This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
+
+3. Run `npm install` or `yarn install` again to run `postinstall`
+
 ## How to use
 
 You can define function properties in `remix.config.js` that can override esbuild configuration values.
