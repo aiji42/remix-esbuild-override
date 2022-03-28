@@ -1,4 +1,5 @@
 import type { BuildOptions } from "esbuild";
+import * as console from "console";
 
 type BrowserBuildOption = BuildOptions;
 type ServerBuildOption = BuildOptions & { write: false };
@@ -37,6 +38,9 @@ export const withEsbuildOverride = (_esbuildOverride?: EsbuildOverride) => {
       value: true,
       enumerable: true,
     });
+    console.log(
+      "💽 Override esbuild. Your custom config can be used to build for Remix."
+    );
     break;
   }
 };
