@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`Only esbuild directly under node_modules 1`] = `
+exports[`patching > Only esbuild directly under node_modules 1`] = `
 {
   "/app/node_modules/esbuild/lib/main.js": "
 var __create = Object.create;
@@ -19,7 +19,7 @@ var __propIsEnum = Object.prototype.propertyIsEnumerable;
 }
 `;
 
-exports[`Only esbuild under @remix-run/dev 1`] = `
+exports[`patching > Only esbuild under @remix-run/dev 1`] = `
 {
   "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js": "
 var __create = Object.create;
@@ -38,7 +38,7 @@ var __propIsEnum = Object.prototype.propertyIsEnumerable;
 }
 `;
 
-exports[`esbuild exists in both 1`] = `
+exports[`patching > esbuild exists in both 1`] = `
 {
   "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js": "
 var __create = Object.create;
@@ -70,7 +70,7 @@ var __propIsEnum = Object.prototype.propertyIsEnumerable;
 }
 `;
 
-exports[`patched already 1`] = `
+exports[`patching > patched already 1`] = `
 {
   "/app/node_modules/esbuild/lib/main.js": "
 var __create = Object.create;

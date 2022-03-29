@@ -1,5 +1,6 @@
 import { withEsbuildOverride, esbuildOverrideOption } from "../index";
 import * as utils from "../utils";
+import { describe, test } from "vitest";
 
 vi.mock("../utils");
 

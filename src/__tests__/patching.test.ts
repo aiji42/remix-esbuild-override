@@ -2,6 +2,7 @@ import { fs, vol } from "memfs";
 import { patching } from "../patching";
 import * as utils from "../utils";
 import { defPropRedefine } from "../constants";
+import { describe, test } from "vitest";
 
 const esbuildMainJs = `
 var __create = Object.create;
@@ -20,115 +21,119 @@ vi.mock("../utils");
 vi.mock("fs", () => fs);
 // const mockedConsoleLog = vi.spyOn(console, "log");
 
-beforeEach(() => {
-  vol.reset();
-});
-afterEach(() => {
-  vi.resetAllMocks();
-});
-
-test("Only esbuild directly under node_modules", () => {
-  vol.fromJSON(
-    {
-      "./node_modules/esbuild/package.json":
-        '{ "name": "esbuild", "main": "lib/main.js" }',
-      "./node_modules/esbuild/lib/main.js": esbuildMainJs,
-    },
-    "/app"
-  );
-  vi.spyOn(utils, "resolve").mockImplementation((mod) => {
-    if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
-    return null;
+describe("patching", () => {
+  beforeEach(() => {
+    vol.reset();
+  });
+  afterEach(() => {
+    vi.resetAllMocks();
   });
 
-  patching();
+  test("Only esbuild directly under node_modules", () => {
+    vol.fromJSON(
+      {
+        "./node_modules/esbuild/package.json":
+          '{ "name": "esbuild", "main": "lib/main.js" }',
+        "./node_modules/esbuild/lib/main.js": esbuildMainJs,
+      },
+      "/app"
+    );
+    vi.spyOn(utils, "resolve").mockImplementation((mod) => {
+      if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
+      return null;
+    });
 
-  expect(vol.toJSON()).toMatchSnapshot();
-});
+    patching();
 
-test("Only esbuild under @remix-run/dev", () => {
-  vol.fromJSON(
-    {
-      "./node_modules/@remix-run/dev/node_modules/esbuild/package.json":
-        '{ "name": "esbuild", "main": "lib/main.js" }',
-      "./node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js":
-        esbuildMainJs,
-    },
-    "/app"
-  );
-  vi.spyOn(utils, "resolve").mockImplementation((mod) => {
-    if (mod === "@remix-run/dev/node_modules/esbuild")
-      return "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js";
-    return null;
+    expect(vol.toJSON()).toMatchSnapshot();
   });
 
-  patching();
+  test("Only esbuild under @remix-run/dev", () => {
+    vol.fromJSON(
+      {
+        "./node_modules/@remix-run/dev/node_modules/esbuild/package.json":
+          '{ "name": "esbuild", "main": "lib/main.js" }',
+        "./node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js":
+          esbuildMainJs,
+      },
+      "/app"
+    );
+    vi.spyOn(utils, "resolve").mockImplementation((mod) => {
+      if (mod === "@remix-run/dev/node_modules/esbuild")
+        return "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js";
+      return null;
+    });
 
-  expect(vol.toJSON()).toMatchSnapshot();
-});
+    patching();
 
-test("esbuild exists in both", () => {
-  vol.fromJSON(
-    {
-      "./node_modules/esbuild/package.json":
-        '{ "name": "esbuild", "main": "lib/main.js" }',
-      "./node_modules/esbuild/lib/main.js": esbuildMainJs,
-      "./node_modules/@remix-run/dev/node_modules/esbuild/package.json":
-        '{ "name": "esbuild", "main": "lib/main.js" }',
-      "./node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js":
-        esbuildMainJs,
-    },
-    "/app"
-  );
-  vi.spyOn(utils, "resolve").mockImplementation((mod) => {
-    if (mod === "@remix-run/dev/node_modules/esbuild")
-      return "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js";
-    return null;
+    expect(vol.toJSON()).toMatchSnapshot();
   });
 
-  patching();
+  test("esbuild exists in both", () => {
+    vol.fromJSON(
+      {
+        "./node_modules/esbuild/package.json":
+          '{ "name": "esbuild", "main": "lib/main.js" }',
+        "./node_modules/esbuild/lib/main.js": esbuildMainJs,
+        "./node_modules/@remix-run/dev/node_modules/esbuild/package.json":
+          '{ "name": "esbuild", "main": "lib/main.js" }',
+        "./node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js":
+          esbuildMainJs,
+      },
+      "/app"
+    );
+    vi.spyOn(utils, "resolve").mockImplementation((mod) => {
+      if (mod === "@remix-run/dev/node_modules/esbuild")
+        return "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js";
+      return null;
+    });
 
-  expect(vol.toJSON()).toMatchSnapshot();
-});
+    patching();
 
-test("defProPattern missing from script", () => {
-  vol.fromJSON(
-    {
-      "./node_modules/esbuild/package.json":
-        '{ "name": "esbuild", "main": "lib/main.js" }',
-      "./node_modules/esbuild/lib/main.js": "",
-    },
-    "/app"
-  );
-  vi.spyOn(utils, "resolve").mockImplementation((mod) => {
-    if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
-    return null;
+    expect(vol.toJSON()).toMatchSnapshot();
   });
 
-  expect(() => patching()).toThrowError(
-    /esbuild patch by remix-esbuild-override failed/
-  );
-});
+  test("defProPattern missing from script", () => {
+    vol.fromJSON(
+      {
+        "./node_modules/esbuild/package.json":
+          '{ "name": "esbuild", "main": "lib/main.js" }',
+        "./node_modules/esbuild/lib/main.js": "",
+      },
+      "/app"
+    );
+    vi.spyOn(utils, "resolve").mockImplementation((mod) => {
+      if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
+      return null;
+    });
 
-test("patched already", () => {
-  const mockedConsole = vi.spyOn(console, "log");
-  vol.fromJSON(
-    {
-      "./node_modules/esbuild/package.json":
-        '{ "name": "esbuild", "main": "lib/main.js" }',
-      "./node_modules/esbuild/lib/main.js": esbuildMainJs + defPropRedefine,
-    },
-    "/app"
-  );
-  vi.spyOn(utils, "resolve").mockImplementation((mod) => {
-    if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
-    return null;
+    expect(() => patching()).toThrowError(
+      /esbuild patch by remix-esbuild-override failed/
+    );
   });
 
-  patching();
+  test("patched already", () => {
+    const mockedConsole = vi.spyOn(console, "log");
+    vol.fromJSON(
+      {
+        "./node_modules/esbuild/package.json":
+          '{ "name": "esbuild", "main": "lib/main.js" }',
+        "./node_modules/esbuild/lib/main.js": esbuildMainJs + defPropRedefine,
+      },
+      "/app"
+    );
+    vi.spyOn(utils, "resolve").mockImplementation((mod) => {
+      if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
+      return null;
+    });
 
-  expect(vol.toJSON()).toMatchSnapshot();
-  expect(mockedConsole).toBeCalledWith(
-    expect.stringMatching(/esbuild patch by remix-esbuild-override is complete/)
-  );
+    patching();
+
+    expect(vol.toJSON()).toMatchSnapshot();
+    expect(mockedConsole).toBeCalledWith(
+      expect.stringMatching(
+        /esbuild patch by remix-esbuild-override is complete/
+      )
+    );
+  });
 });
