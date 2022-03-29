@@ -1,16 +1,15 @@
-import { spawn } from "node:child_process";
-
-export const resolvePath = (moduleName: string) => {
-  return require.resolve(moduleName);
+export const resolve = (mod: string): string | null => {
+  try {
+    return require.resolve(mod);
+  } catch (_) {
+    return null;
+  }
 };
 
-export const restartOnce = () => {
-  if (process.env.restarting)
-    throw new Error("An unexpected error has occurred.");
-
-  console.log("💽 Auto restarting precess...");
-  spawn(process.argv[0], process.argv.slice(1), {
-    env: { restarting: "true" },
-    stdio: "ignore",
-  }).unref();
+export const load = <T>(mod: string): T | null => {
+  try {
+    return require(mod) as T;
+  } catch (_) {
+    return null;
+  }
 };
