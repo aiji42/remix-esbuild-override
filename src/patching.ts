@@ -14,7 +14,7 @@ export const patching = () => {
     }
     if (!original.match(defProPattern))
       throw new Error(
-        "😵 esbuild patch by remix-esbuild-override failed, please check the the esbuild and remix versions and report this in a new issue. https://github.com/aiji42/remix-esbuild-override/issues/new"
+        "❌ esbuild patch by remix-esbuild-override failed, please check the the esbuild and remix versions and report this in a new issue. https://github.com/aiji42/remix-esbuild-override/issues/new"
       );
     const patched = original.replace(defProPattern, `$&\n${defPropRedefine}`);
     fs.writeFileSync(path, patched);

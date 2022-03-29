@@ -32,7 +32,12 @@ let _esbuildOverride: EsbuildOverride = (arg) => arg;
  * @param {EsbuildOverride} esbuildOverride - callback function
  */
 export const withEsbuildOverride = (esbuildOverride?: EsbuildOverride) => {
-  if (typeof esbuildOverride !== "function") return;
+  if (typeof esbuildOverride !== "function") {
+    console.warn(
+      "💽 esbuild is not overridden because no callback function is defined"
+    );
+    return;
+  }
   _esbuildOverride = esbuildOverride;
 
   for (const mod of mods) {
@@ -41,16 +46,22 @@ export const withEsbuildOverride = (esbuildOverride?: EsbuildOverride) => {
 
     if (esbuild.overridden) break;
     const originalBuildFunction = esbuild.build;
-    Object.defineProperty(esbuild, "build", {
-      get: () => (option: EsbuildOption) => {
-        return originalBuildFunction(esbuildOverrideOption(option));
-      },
-      enumerable: true,
-    });
-    Object.defineProperty(esbuild, "overridden", {
-      value: true,
-      enumerable: true,
-    });
+    try {
+      Object.defineProperty(esbuild, "build", {
+        get: () => (option: EsbuildOption) => {
+          return originalBuildFunction(esbuildOverrideOption(option));
+        },
+        enumerable: true,
+      });
+      Object.defineProperty(esbuild, "overridden", {
+        value: true,
+        enumerable: true,
+      });
+    } catch {
+      throw new Error(
+        "❌ Override of esbuild failed. Check if postinstall has mix-esbuild-override set. See: https://github.com/aiji42/remix-esbuild-override#install"
+      );
+    }
     console.log(
       "💽 Override esbuild. Your custom config can be used to build for Remix."
     );
@@ -61,5 +72,11 @@ export const withEsbuildOverride = (esbuildOverride?: EsbuildOverride) => {
 export const esbuildOverrideOption = (option: EsbuildOption) => {
   const isServer = option.write === false;
   const isDev = option.define?.["process.env.NODE_ENV"] === "development";
-  return _esbuildOverride(option, { isServer, isDev });
+  const newOption = _esbuildOverride(option, { isServer, isDev });
+  if (!newOption) {
+    throw new Error(
+      "❌ The callback function withEsbuildOverride must return the esbuild option value."
+    );
+  }
+  return newOption;
 };

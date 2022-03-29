@@ -89,3 +89,22 @@ test("esbuild exists in both", () => {
 
   expect(vol.toJSON()).toMatchSnapshot();
 });
+
+test("defProPattern missing from script", () => {
+  vol.fromJSON(
+    {
+      "./node_modules/esbuild/package.json":
+        '{ "name": "esbuild", "main": "lib/main.js" }',
+      "./node_modules/esbuild/lib/main.js": "",
+    },
+    "/app"
+  );
+  vi.spyOn(utils, "resolve").mockImplementation((mod) => {
+    if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
+    return null;
+  });
+
+  expect(() => patching()).toThrowError(
+    /esbuild patch by remix-esbuild-override failed/
+  );
+});
