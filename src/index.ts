@@ -58,9 +58,10 @@ export const withEsbuildOverride = (esbuildOverride?: EsbuildOverride) => {
         enumerable: true,
       });
     } catch {
-      throw new Error(
-        "❌ Override of esbuild failed. Check if postinstall has mix-esbuild-override set. See: https://github.com/aiji42/remix-esbuild-override#install"
-      );
+      const msg =
+        "❌ Override of esbuild failed. Check if postinstall has mix-esbuild-override set. See: https://github.com/aiji42/remix-esbuild-override#install";
+      console.error(msg);
+      throw new Error(msg);
     }
     console.log(
       "💽 Override esbuild. Your custom config can be used to build for Remix."
