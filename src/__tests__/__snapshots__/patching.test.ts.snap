@@ -5,7 +5,8 @@ exports[`Only esbuild directly under node_modules 1`] = `
   "/app/node_modules/esbuild/lib/main.js": "
 var __create = Object.create;
 var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -23,7 +24,8 @@ exports[`Only esbuild under @remix-run/dev 1`] = `
   "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js": "
 var __create = Object.create;
 var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -41,7 +43,8 @@ exports[`esbuild exists in both 1`] = `
   "/app/node_modules/@remix-run/dev/node_modules/esbuild/lib/main.js": "
 var __create = Object.create;
 var __defProp = Object.defineProperty;
-var __defProps = Object.defineProperties;__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+__defProp = (a, b, c) => Object.defineProperty(a, b, { ...c, configurable: true });
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;

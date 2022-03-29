@@ -1,6 +1,6 @@
 import { BuildOptions, build } from "esbuild";
-import * as console from "console";
 import { load } from "./utils";
+import { mods } from "./constants";
 
 type BrowserBuildOption = BuildOptions;
 type ServerBuildOption = BuildOptions & { write: false };
@@ -20,7 +20,7 @@ export const withEsbuildOverride = (_esbuildOverride?: EsbuildOverride) => {
   if (typeof _esbuildOverride !== "function") return;
   esbuildOverride = _esbuildOverride;
 
-  for (const mod of ["@remix-run/dev/node_modules/esbuild", "esbuild"]) {
+  for (const mod of mods) {
     const esbuild = load<{ overridden?: boolean; build: typeof build }>(mod);
     if (!esbuild) continue;
 
