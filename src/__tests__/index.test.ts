@@ -60,6 +60,15 @@ describe("index", () => {
         define: { "process.env.NODE_ENV": "development" },
       });
     });
+
+    test("defined invalid callback", () => {
+      // @ts-ignore
+      withEsbuildOverride(() => {});
+
+      expect(() => esbuildOverrideOption({})).toThrowError(
+        /The callback function withEsbuildOverride must return the esbuild option value/
+      );
+    });
   });
 
   describe("withEsbuildOverride", () => {
@@ -99,6 +108,23 @@ describe("index", () => {
         foo: "bar",
       });
       expect(esbuild.overridden).toEqual(true);
+    });
+
+    test("Unable to override esbuild", () => {
+      const obj = {};
+      Object.defineProperty(obj, "build", { get: () => mockedBuildFunction });
+      vi.spyOn(utils, "load").mockReturnValue(obj);
+      expect(() => withEsbuildOverride((option) => option)).toThrowError(
+        /Override of esbuild failed/
+      );
+    });
+
+    test("not defined callback", () => {
+      const mock = vi.spyOn(console, "warn");
+      withEsbuildOverride();
+      expect(mock).toBeCalledWith(
+        expect.stringMatching(/esbuild is not overridden/)
+      );
     });
   });
 });
