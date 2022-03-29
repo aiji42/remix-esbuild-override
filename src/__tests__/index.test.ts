@@ -114,15 +114,19 @@ describe("index", () => {
       const obj = {};
       Object.defineProperty(obj, "build", { get: () => mockedBuildFunction });
       vi.spyOn(utils, "load").mockReturnValue(obj);
+      const mockedConsole = vi.spyOn(console, "error");
       expect(() => withEsbuildOverride((option) => option)).toThrowError(
         /Override of esbuild failed/
+      );
+      expect(mockedConsole).toBeCalledWith(
+        expect.stringMatching(/Override of esbuild failed/)
       );
     });
 
     test("not defined callback", () => {
-      const mock = vi.spyOn(console, "warn");
+      const mockedConsole = vi.spyOn(console, "warn");
       withEsbuildOverride();
-      expect(mock).toBeCalledWith(
+      expect(mockedConsole).toBeCalledWith(
         expect.stringMatching(/esbuild is not overridden/)
       );
     });

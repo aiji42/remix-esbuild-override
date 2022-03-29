@@ -1,6 +1,7 @@
 import { fs, vol } from "memfs";
 import { patching } from "../patching";
 import * as utils from "../utils";
+import { defPropRedefine } from "../constants";
 
 const esbuildMainJs = `
 var __create = Object.create;
@@ -106,5 +107,28 @@ test("defProPattern missing from script", () => {
 
   expect(() => patching()).toThrowError(
     /esbuild patch by remix-esbuild-override failed/
+  );
+});
+
+test("patched already", () => {
+  const mockedConsole = vi.spyOn(console, "log");
+  vol.fromJSON(
+    {
+      "./node_modules/esbuild/package.json":
+        '{ "name": "esbuild", "main": "lib/main.js" }',
+      "./node_modules/esbuild/lib/main.js": esbuildMainJs + defPropRedefine,
+    },
+    "/app"
+  );
+  vi.spyOn(utils, "resolve").mockImplementation((mod) => {
+    if (mod === "esbuild") return "/app/node_modules/esbuild/lib/main.js";
+    return null;
+  });
+
+  patching();
+
+  expect(vol.toJSON()).toMatchSnapshot();
+  expect(mockedConsole).toBeCalledWith(
+    expect.stringMatching(/esbuild patch by remix-esbuild-override is complete/)
   );
 });
