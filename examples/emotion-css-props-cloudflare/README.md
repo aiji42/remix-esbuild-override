@@ -18,13 +18,15 @@ npm install -D remix-esbuild-override @esbuild-plugins/node-globals-polyfill
 yarn add -D remix-esbuild-override @esbuild-plugins/node-globals-polyfill
 ```
 
-update `scripts > postinstall` in package.json
+Update `scripts > postinstall` in package.json.
 
 ```json
 "scripts": {
   "postinstall": "remix setup cloudflare && remix-esbuild-override"
 }
 ```
+
+Run `npm install` or `yarn install` again to run `postinstall`.
 
 2. Update tsconfig.json
 

@@ -3,9 +3,10 @@
 The base template is [here](https://github.com/remix-run/remix/tree/main/examples/emotion), and the configuration under the app directory is the same as this one.  
 This example is for Cloudflare Workers, but it is basically the same for Cloudflare Pages.
 
+Since @emotion/server depends on Buffer, it cannot run on Cloudflare as is.
+
 ## Use remix-esbuild-override
 
-Since @emotion/server depends on Buffer, it cannot run on Cloudflare as is.  
 Use remix-esbuild-override and the plugin for polyfill to solve the problem.
 
 1. Install and setup `postinstall`
@@ -16,13 +17,15 @@ npm install -D remix-esbuild-override @esbuild-plugins/node-globals-polyfill
 yarn add -D remix-esbuild-override @esbuild-plugins/node-globals-polyfill
 ```
 
-update `scripts > postinstall` in package.json
+Update `scripts > postinstall` in package.json.
 
 ```json
 "scripts": {
   "postinstall": "remix setup cloudflare && remix-esbuild-override"
 }
 ```
+
+Run `npm install` or `yarn install` again to run `postinstall`.
 
 2. Update remix.config.js
 
