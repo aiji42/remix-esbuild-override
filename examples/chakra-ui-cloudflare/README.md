@@ -1,4 +1,4 @@
-# Remix with [Chakra-ui](https://chakra-ui.com/) on Cloudflare
+# Remix with [Chakra UI](https://chakra-ui.com/) on Cloudflare
 
 The base template is based on the official [setup document](https://chakra-ui.com/guides/getting-started/remix-guide) and is exactly as it is under the app directory.  
 This example is for Cloudflare Workers, but it is basically the same for Cloudflare Pages.

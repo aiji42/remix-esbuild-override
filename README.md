@@ -72,10 +72,10 @@ module.exports = {
 
 - [emotion (styled) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-cloudflare)
 - [emotion (css props) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-css-props-cloudflare)
+- [Chakra UI on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/chakura-ui-cloudflare)
 
 Coming soon.
 
-- [ ] chakra-ui on Cloudflare
 - [ ] preact on any runtimes
 - [ ] supabase-js on Cloudflare
 - [ ] [mantine](https://mantine.dev/) on Cloudflare
