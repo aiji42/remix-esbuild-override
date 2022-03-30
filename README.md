@@ -20,7 +20,7 @@ So I decided to provide that functionality outside of Remix (in this 3rd-party l
 # npm
 npm install -D remix-esbuild-override
 
-# yarn 
+# yarn
 yarn add -D remix-esbuild-override
 ```
 
@@ -31,6 +31,7 @@ yarn add -D remix-esbuild-override
   "postinstall": "remix setup cloudflare && remix-esbuild-override"
 }
 ```
+
 This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
 
 3. Run `npm install` or `yarn install` again to run `postinstall`
@@ -52,13 +53,10 @@ const { withEsbuildOverride } = require("remix-esbuild-override");
  */
 withEsbuildOverride((option, { isServer, isDev }) => {
   // update the option
-  option.plugins = [
-    someEsbuildPlugin,
-    ...option.plugins
-  ]
+  option.plugins = [someEsbuildPlugin, ...option.plugins];
 
   return option;
-})
+});
 
 /**
  * @type {import('@remix-run/dev').AppConfig}
@@ -70,57 +68,26 @@ module.exports = {
 
 :memo: NOTE: Compilation is executed twice, once for the server and once for the browser.
 
-### For example
+### Examples
 
-This is an example of choosing Cloudflare Workers at runtime and using [emotion](https://emotion.sh/docs/introduction).
+- [emotion (styled) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-cloudflare)
+- [emotion (css props) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-css-props-cloudflare)
 
-```bash
-yarn add @emotion/server @emotion/react @emotion/cache
-yarn add -D no-op esbuild-plugin-alias 
-```
+Coming soon.
 
-```ts
-// reactShims.ts
-import { jsx } from "@emotion/react";
-import * as React from "react";
-export { jsx, React };
-```
-
-```js
-// remix.config.js
-const path = require("node:path");
-const alias = require("esbuild-plugin-alias");
-const { withEsbuildOverride } = require("remix-esbuild-override");
-
-withEsbuildOverride((option, { isServer }) => {
-  option.jsxFactory = "jsx";
-  option.inject = [path.resolve(__dirname, "reactShims.ts")];
-  option.plugins = [
-    alias({
-      through: require.resolve("no-op"),
-      "html-tokenize": require.resolve("no-op"),
-      multipipe: require.resolve("no-op"),
-    }),
-    ...option.plugins,
-  ];
-  if (isServer) option.mainFields = ["browser", "module", "main"];
-
-  return option;
-})
-
-/**
- * @type {import('@remix-run/dev').AppConfig}
- */
-module.exports = {
-  serverBuildTarget: "cloudflare-workers",
-  server: "./server.js",
-  devServerBroadcastDelay: 1000,
-  ignoredRouteFiles: [".*"],
-};
-```
+- [ ] chakra-ui on Cloudflare
+- [ ] preact on any runtimes
+- [ ] supabase-js on Cloudflare
+- [ ] [mantine](https://mantine.dev/) on Cloudflare
+- [ ] stylus on any runtimes
+- [ ] linaria on any runtimes
+- [ ] vanilla-extract on any runtimes
+- [ ] Buffer polyfill (using @magic-sdk/admin v[1.3.4](https://www.npmjs.com/package/@magic-sdk/admin/v/1.3.4))
 
 ## Contributing
+
 Please read [CONTRIBUTING.md](https://github.com/aiji42/remix-esbuild-override/blob/main/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/aiji42/remix-esbuild-override/blob/main/LICENSE) file for details
