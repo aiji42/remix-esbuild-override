@@ -25,7 +25,7 @@ Update `scripts > postinstall` in package.json.
 }
 ```
 
-Run `npm install` or `yarn install` again to run `postinstall`.
+**Run `npm install` or `yarn install` again to run `postinstall`.**
 
 2. Update remix.config.js
 
