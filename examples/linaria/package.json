@@ -15,10 +15,10 @@
     "start": "cross-env NODE_ENV=production miniflare ./build/index.js"
   },
   "dependencies": {
-    "@linaria/babel-preset": "^3.0.0-beta.15",
-    "@linaria/core": "^3.0.0-beta.15",
-    "@linaria/react": "^3.0.0-beta.15",
-    "@linaria/shaker": "^3.0.0-beta.15",
+    "@linaria/babel-preset": "^3.0.0-beta.18",
+    "@linaria/core": "^3.0.0-beta.18",
+    "@linaria/react": "^3.0.0-beta.18",
+    "@linaria/shaker": "^3.0.0-beta.18",
     "@remix-run/cloudflare-workers": "^1.3.4",
     "@remix-run/react": "^1.3.4",
     "cross-env": "^7.0.3",
