@@ -1,9 +1,8 @@
 const { withEsbuildOverride } = require("remix-esbuild-override");
 const linaria = require("./linaria-esbuild-plugin");
 
-withEsbuildOverride((option, { isServer }) => {
-  if (isServer) option.mainFields = ["browser", "module", "main"];
-  option.plugins = [linaria({}), ...option.plugins];
+withEsbuildOverride((option) => {
+  option.plugins.unshift(linaria({}));
 
   return option;
 });
