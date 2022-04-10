@@ -35,14 +35,13 @@ const GlobalsPolyfills =
   require("@esbuild-plugins/node-globals-polyfill").default;
 
 withEsbuildOverride((option, { isServer }) => {
-  if (isServer) option.mainFields = ["browser", "module", "main"];
-
-  option.plugins = [
-    GlobalsPolyfills({
-      buffer: true,
-    }),
-    ...option.plugins,
-  ];
+  if (isServer)
+    option.plugins = [
+      GlobalsPolyfills({
+        buffer: true,
+      }),
+      ...option.plugins,
+    ];
 
   return option;
 });
