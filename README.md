@@ -28,11 +28,9 @@ yarn add -D remix-esbuild-override
 
 ```json
 "scripts": {
-  "postinstall": "remix setup cloudflare && remix-esbuild-override"
+  "postinstall": "remix-esbuild-override"
 }
 ```
-
-This is an example if Cloudflare Workers is selected as the runtime for Remix; it should be written to run after `remix setup`.
 
 3. Run `npm install` or `yarn install` again to run `postinstall`
 
@@ -80,7 +78,6 @@ Coming soon.
 
 - [ ] vanilla-extract on any runtimes <= I'm working on it.
 - [ ] preact on any runtimes
-- [ ] supabase-js on Cloudflare
 - [ ] stylus on any runtimes
 - [ ] Buffer polyfill (using @magic-sdk/admin v[1.3.4](https://www.npmjs.com/package/@magic-sdk/admin/v/1.3.4))
 
