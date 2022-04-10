@@ -18,7 +18,7 @@ Update `scripts > postinstall` in package.json.
 
 ```json
 "scripts": {
-  "postinstall": "remix setup cloudflare && remix-esbuild-override"
+  "postinstall": "remix-esbuild-override"
 }
 ```
 
