@@ -1,4 +1,3 @@
-import type { MetaFunction } from "remix";
 import {
   Links,
   LiveReload,
@@ -7,7 +6,8 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
-} from "remix";
+} from "@remix-run/react";
+import { MetaFunction } from "@remix-run/server-runtime";
 import { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
 import ServerStyleContext from "./styles/server.context";

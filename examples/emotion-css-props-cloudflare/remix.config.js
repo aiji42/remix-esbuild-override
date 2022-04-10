@@ -7,13 +7,13 @@ withEsbuildOverride((option, { isServer }) => {
   option.jsxFactory = "jsx";
   option.inject = [path.resolve(__dirname, "reactShims.ts")];
 
-  if (isServer) option.mainFields = ["browser", "module", "main"];
-  option.plugins = [
-    GlobalsPolyfills({
-      buffer: true,
-    }),
-    ...option.plugins,
-  ];
+  if (isServer)
+    option.plugins = [
+      GlobalsPolyfills({
+        buffer: true,
+      }),
+      ...option.plugins,
+    ];
 
   return option;
 });

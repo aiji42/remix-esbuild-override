@@ -22,7 +22,7 @@ Update `scripts > postinstall` in package.json.
 
 ```json
 "scripts": {
-  "postinstall": "remix setup cloudflare && remix-esbuild-override"
+  "postinstall": "remix-esbuild-override"
 }
 ```
 
@@ -59,13 +59,13 @@ withEsbuildOverride((option, { isServer }) => {
   option.inject = [path.resolve(__dirname, "reactShims.ts")];
 
   // 🔽 This block is for Cloudflare Workers/Pages. 🔽
-  if (isServer) option.mainFields = ["browser", "module", "main"];
-  option.plugins = [
-    GlobalsPolyfills({
-      buffer: true,
-    }),
-    ...option.plugins,
-  ];
+  if (isServer)
+    option.plugins = [
+      GlobalsPolyfills({
+        buffer: true,
+      }),
+      ...option.plugins,
+    ];
   // 🔼 This block is for Cloudflare Workers/Pages. 🔼
 
   return option;

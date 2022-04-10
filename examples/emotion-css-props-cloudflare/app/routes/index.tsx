@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
-import { Link } from "remix";
+import { Link } from "@remix-run/react";
 
 const style = css`
-  font-family: "system-ui, sans-serif";
+  font-family: system-ui, sans-serif;
   line-height: 1.4;
   background-color: #ddd;
 `;

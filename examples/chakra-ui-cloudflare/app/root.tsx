@@ -6,10 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
   LiveReload,
-  MetaFunction,
-  LinksFunction,
   useCatch,
-} from "remix";
+} from "@remix-run/react";
+import { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
 import { withEmotionCache } from "@emotion/react";
 import { Box, ChakraProvider, Heading } from "@chakra-ui/react";
 import { ServerStyleContext, ClientStyleContext } from "./styles/context";
