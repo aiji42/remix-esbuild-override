@@ -1,0 +1,55 @@
+{
+  "name": "remix-template-cloudflare-workers",
+  "private": true,
+  "description": "",
+  "license": "",
+  "sideEffects": false,
+  "main": "build/index.js",
+  "scripts": {
+    "build": "npm run build:css && remix build",
+    "build:css": "postcss ./styles/index.css --output app/styles/index.css --env production",
+    "deploy": "npm run build && wrangler publish",
+    "dev:remix": "remix watch",
+    "dev:miniflare": "cross-env NODE_ENV=development miniflare ./build/index.js --watch",
+    "dev:css": "TAILWIND_MODE=watch postcss ./styles/index.css --output app/styles/index.css --watch",
+    "dev": "remix build && run-p dev:*",
+    "start": "cross-env NODE_ENV=production miniflare ./build/index.js",
+    "postinstall": "remix-esbuild-override"
+  },
+  "dependencies": {
+    "@heroicons/react": "^1.0.6",
+    "@remix-run/cloudflare": "^1.3.5",
+    "@remix-run/cloudflare-workers": "^1.3.5",
+    "@remix-run/react": "^1.3.5",
+    "@remix-validated-form/with-zod": "^2.0.1",
+    "classnames": "^2.3.1",
+    "cross-env": "^7.0.3",
+    "highlight.js": "^11.5.1",
+    "postcss": "^8.4.12",
+    "postcss-cli": "^9.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "remix-validated-form": "^4.3.0",
+    "tailwindcss": "^3.0.23",
+    "zod": "^3.14.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.4.0",
+    "@remix-run/dev": "^1.3.5",
+    "@remix-run/eslint-config": "^1.3.5",
+    "@tailwindcss/typography": "^0.5.2",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
+    "autoprefixer": "^10.4.4",
+    "esbuild-plugin-alias": "^0.2.1",
+    "eslint": "^8.11.0",
+    "miniflare": "^2.1.0",
+    "npm-run-all": "^4.1.5",
+    "postcss-import": "^14.1.0",
+    "remix-esbuild-override": "^3.0.2",
+    "typescript": "^4.5.5"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
