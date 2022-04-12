@@ -73,6 +73,7 @@ module.exports = {
 - [Chakra UI on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/chakra-ui-cloudflare)
 - [Mantine on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/mantine-cloudflare)
 - [linaria](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/linaria)
+- [remix-validated-form on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/remix-validated-form-cloudflare)
 
 Coming soon.
 
