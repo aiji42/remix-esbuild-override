@@ -1,3 +1,70 @@
+# Remix with [remix-validated-form](https://www.remix-validated-form.io/) on Cloudflare
+
+This example is for Cloudflare Workers, but it is basically the same for Cloudflare Pages.
+
+The [remix-validated-form](https://www.remix-validated-form.io/) uses `jotai` internally and it's esm module does not work on Cloudflare because it uses `import.meta`.  
+Remix will give preference to esm references in building the server code if you have chosen cloudflare. This works well in most cases, but unfortunately is incompatible with `jotai`.
+
+## Use remix-esbuild-override
+
+Use `remix-esbuild-override` and `esbuild-plugin-alias` to avoid this problem.
+
+1. Install and setup `postinstall`
+
+```bash
+npm install -D remix-esbuild-override esbuild-plugin-alias
+# or
+yarn add -D remix-esbuild-override esbuild-plugin-alias
+```
+
+Update `scripts > postinstall` in package.json.
+
+```json
+"scripts": {
+  "postinstall": "remix-esbuild-override"
+}
+```
+
+**Run `npm install` or `yarn install` again to run `postinstall`.**
+
+2. Update remix.config.js
+
+```js
+const { withEsbuildOverride } = require("remix-esbuild-override");
+const alias = require("esbuild-plugin-alias");
+
+withEsbuildOverride((option, { isServer }) => {
+  if (isServer) {
+    option.plugins = [
+      alias({
+        jotai: require.resolve("jotai"),
+      }),
+      ...option.plugins,
+    ];
+  }
+
+  return option;
+});
+
+/**
+ * @type {import('@remix-run/dev').AppConfig}
+ */
+module.exports = {
+  serverBuildTarget: "cloudflare-workers",
+  server: "./server.js",
+  devServerBroadcastDelay: 1000,
+  ignoredRouteFiles: [".*"],
+  // appDirectory: "app",
+  // assetsBuildDirectory: "public/build",
+  // serverBuildPath: "build/index.js",
+  // publicPath: "/build/",
+};
+```
+
+That's all.
+
+---
+
 # Welcome to Remix!
 
 - [Remix Docs](https://remix.run/docs)
