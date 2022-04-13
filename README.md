@@ -1,4 +1,5 @@
 [![npm version](https://badge.fury.io/js/remix-esbuild-override.svg)](https://badge.fury.io/js/remix-esbuild-override)
+[![codecov](https://codecov.io/gh/aiji42/remix-esbuild-override/branch/main/graph/badge.svg?token=3CKLRN020Q)](https://codecov.io/gh/aiji42/remix-esbuild-override)
 
 # :minidisc: remix-esbuild-override
 
