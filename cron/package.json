@@ -1,0 +1,16 @@
+{
+  "name": "cron",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "remix-esbuild-override",
+    "test": "node index.js && node out.js"
+  },
+  "dependencies": {
+    "esbuild": "latest",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "remix-esbuild-override": "latest"
+  }
+}
