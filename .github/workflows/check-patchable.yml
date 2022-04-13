@@ -1,0 +1,27 @@
+name: check-patchable
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron:  '0 10 * * *'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        working-directory: ./cron
+        run: | 
+          yarn install --no-lockfile
+          yarn list esbuild remix-esbuild-override
+      - name: Run Test
+        working-directory: ./cron
+        run: yarn test
