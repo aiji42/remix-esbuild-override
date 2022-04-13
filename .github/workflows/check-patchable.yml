@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-      - check-patchable
+  pull_request:
+    branches:
+      - main
   schedule:
     - cron:  '0 10 * * *'
 
