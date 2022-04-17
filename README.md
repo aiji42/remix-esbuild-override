@@ -75,6 +75,7 @@ module.exports = {
 - [Mantine on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/mantine-cloudflare)
 - [linaria](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/linaria)
 - [remix-validated-form on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/remix-validated-form-cloudflare)
+- [Prisma on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/prisma-cloudflare)
 
 Coming soon.
 
