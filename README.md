@@ -82,7 +82,6 @@ Coming soon.
 - [ ] vanilla-extract on any runtimes <= I'm working on it.
 - [ ] preact on any runtimes
 - [ ] stylus on any runtimes
-- [ ] Buffer polyfill (using @magic-sdk/admin v[1.3.4](https://www.npmjs.com/package/@magic-sdk/admin/v/1.3.4))
 
 ## Contributing
 
