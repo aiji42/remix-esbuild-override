@@ -1,4 +1,4 @@
-import { PrismaClient } from "~/libs/prisma.server";
+import { client } from "~/libs/prisma.server";
 import { useLoaderData } from "@remix-run/react";
 import type { Link } from "@prisma/client";
 
@@ -7,8 +7,7 @@ type Data = {
 };
 
 export async function loader() {
-  const prisma = new PrismaClient();
-  const links = await prisma.link.findMany({ take: 3 });
+  const links = await client().link.findMany({ take: 3 });
 
   return { links };
 }
