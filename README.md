@@ -77,12 +77,7 @@ module.exports = {
 - [remix-validated-form on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/remix-validated-form-cloudflare)
 - [Prisma on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/prisma-cloudflare)
 
-Coming soon.
-
-- [ ] vanilla-extract on any runtimes <= I'm working on it.
-- [ ] preact on any runtimes
-- [ ] stylus on any runtimes
-- [ ] Buffer polyfill (using @magic-sdk/admin v[1.3.4](https://www.npmjs.com/package/@magic-sdk/admin/v/1.3.4))
+If you have other example requests, please create an issue. Additional pull requests for examples are also welcome.
 
 ## Contributing
 
