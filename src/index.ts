@@ -59,7 +59,7 @@ export const withEsbuildOverride = (esbuildOverride?: EsbuildOverride) => {
       });
     } catch {
       const msg =
-        "❌ Override of esbuild failed. Check if postinstall has mix-esbuild-override set. See: https://github.com/aiji42/remix-esbuild-override#install";
+        "❌ Override of esbuild failed. Check if postinstall has remix-esbuild-override set. See: https://github.com/aiji42/remix-esbuild-override#install";
       console.error(msg);
       throw new Error(msg);
     }
