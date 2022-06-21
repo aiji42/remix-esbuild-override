@@ -1,10 +1,8 @@
-# Remix with [linaria](https://github.com/callstack/linaria)
-
-This example is for Cloudflare Workers, but it is basically the same for any runtimes.
+# Remix with [vanilla-extract](https://vanilla-extract.style/)
 
 ## Use remix-esbuild-override
 
-To use linaria, the esbuild plugin must be adapted, so install `remix-esbuild-override` to make esbuild extensible.
+To use vanilla-extract, the esbuild plugin must be adapted, so install `remix-esbuild-override` to make esbuild extensible.
 
 #### 1. Install and setup `postinstall`
 
@@ -27,30 +25,30 @@ Update `scripts > postinstall` in package.json.
 #### 2. Install the libraries of linaria
 
 ```bash
-npm install @linaria/core @linaria/react @linaria/babel-preset @linaria/shaker
+npm install @vanilla-extract/css
 # or
-yarn add @linaria/core @linaria/react @linaria/babel-preset @linaria/shaker
+yarn add @@vanilla-extract/css
 ```
 
 #### 3. Create a plugin for esbuild and .d.ts
 
 There is an official esbuild plugin for linaria, but it cannot be used with remix without modification, so you will need to create your own plugin.  
-Copy [this file](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/linaria/linaria-esbuild-plugin.js) and place it in the root of the project (same directory as remix.config.js).
+Copy [this file](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/linaria/vanilla-extract-esbuild-plugin.js) and place it in the root of the project (same directory as remix.config.js).
 
 Create `global.d.ts`.
 
 ```ts
-declare const __linariaStyle: string;
+declare const __vanillaStyle: string[];
 ```
 
 #### 4. Update remix.config.js
 
 ```js
 const { withEsbuildOverride } = require("remix-esbuild-override");
-const linaria = require("./linaria-esbuild-plugin");
+const vanillaExtract = require("./vanilla-extract-esbuild-plugin");
 
 withEsbuildOverride((option) => {
-  option.plugins.unshift(linaria({}));
+  option.plugins.unshift(vanillaExtract());
 
   return option;
 });
@@ -59,46 +57,17 @@ withEsbuildOverride((option) => {
  * @type {import('@remix-run/dev').AppConfig}
  */
 module.exports = {
-  serverBuildTarget: "cloudflare-workers",
-  server: "./server.js",
-  devServerBroadcastDelay: 1000,
   ignoredRouteFiles: [".*"],
-  // appDirectory: "app",
-  // assetsBuildDirectory: "public/build",
-  // serverBuildPath: "build/index.js",
-  // publicPath: "/build/",
+  appDirectory: "app",
+  assetsBuildDirectory: "public/build",
+  serverBuildPath: "build/index.js",
+  publicPath: "/build/",
 };
 ```
 
-#### 5. Use @linaria/core to define styles
+#### 5. Use *.css.ts files to define styles
 
-Styles defined using `@linaria/core` are converted to css files via esbuild. You can get the public file path in the `__linariaStyle` namespace and pass it to the href of links.
-
-```tsx
-// app/routes/index.tsx
-import { css } from "@linaria/core";
-
-export const links = () => [{ rel: "stylesheet", href: __linariaStyle }];
-
-const styles = {
-  container: css`
-    font-family: system-ui, sans-serif;
-    line-height: 1.2;
-  `,
-  header: css`
-    color: coral;
-  `,
-};
-
-export default function Index() {
-  return (
-    <div className={styles.container}>
-      <h1 className={styles.header}>Welcome to Remix</h1>
-      <ul>{/* ... */}</ul>
-    </div>
-  );
-}
-```
+Styles in vanilla-extract should be written in their own files which can be converted to a css file in esbuild. A css file can output multiple css dependencies which can be accessed in the `__vanillaStyle` namespace. Those href's can be passed to the remix run links.
 
 That's all.
 
