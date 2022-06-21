@@ -1,6 +1,5 @@
 import { Paragraph, links as paragraphLinks } from "~/components/Paragraph";
 
-// import * as styles from './index.css'
 
 export const links = () => [
   ...paragraphLinks(),
