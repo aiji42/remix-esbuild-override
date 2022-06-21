@@ -22,7 +22,7 @@ Update `scripts > postinstall` in package.json.
 
 **Run `npm install` or `yarn install` again to run `postinstall`.**
 
-#### 2. Install the libraries of linaria
+#### 2. Install vanilla-extract
 
 ```bash
 npm install @vanilla-extract/css
