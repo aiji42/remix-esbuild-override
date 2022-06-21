@@ -32,7 +32,7 @@ yarn add @@vanilla-extract/css
 
 #### 3. Create a plugin for esbuild and .d.ts
 
-There is an official esbuild plugin for linaria, but it cannot be used with remix without modification, so you will need to create your own plugin.  
+There is an official esbuild plugin for vanilla-extract, but it cannot be used with remix without modification, so you will need to create your own plugin.  
 Copy [this file](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/linaria/vanilla-extract-esbuild-plugin.js) and place it in the root of the project (same directory as remix.config.js).
 
 Create `global.d.ts`.
