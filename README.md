@@ -76,6 +76,7 @@ module.exports = {
 - [linaria](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/linaria)
 - [remix-validated-form on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/remix-validated-form-cloudflare)
 - [Prisma on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/prisma-cloudflare)
+- [Vanilla extract](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/vanilla-extract)
 
 If you have other example requests, please create an issue. Additional pull requests for examples are also welcome.
 
