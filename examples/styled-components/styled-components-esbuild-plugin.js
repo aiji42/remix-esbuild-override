@@ -1,6 +1,7 @@
 const babel = require("@babel/core");
 const styled = require("babel-plugin-styled-components");
 const fs = require("node:fs");
+const path = require("path");
 
 function styledComponentsPlugin() {
   return {
@@ -46,6 +47,7 @@ function styledComponentsPlugin() {
             `//# sourceMappingURL=data:application/json;base64,` +
             Buffer.from(JSON.stringify(result.map)).toString("base64"),
           loader,
+          resolveDir: path.dirname(args.path),
         };
       });
     },
