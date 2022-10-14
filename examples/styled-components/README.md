@@ -47,9 +47,9 @@ Copy [this file](https://github.com/aiji42/remix-esbuild-override/tree/main/exam
 Install dependencies for the plugin above:
 
 ```bash
-npm install -S @babel/core babel-plugin-styled-components
+npm install -D @babel/core babel-plugin-styled-components
 # or
-yarn add @babel/core babel-plugin-styled-components
+yarn add -D @babel/core babel-plugin-styled-components
 ```
 
 
