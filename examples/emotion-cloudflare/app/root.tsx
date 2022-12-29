@@ -1,3 +1,4 @@
+import type { MetaFunction } from "@remix-run/cloudflare";
 import {
   Links,
   LiveReload,
@@ -7,12 +8,10 @@ import {
   ScrollRestoration,
   useCatch,
 } from "@remix-run/react";
-import { MetaFunction } from "@remix-run/server-runtime";
-import { useContext, useEffect } from "react";
 import { withEmotionCache } from "@emotion/react";
-import ServerStyleContext from "./styles/server.context";
-import ClientStyleContext from "./styles/client.context";
-
+import { useContext, useEffect } from "react";
+import ServerStyleContext from "~/styles/server.context";
+import ClientStyleContext from "~/styles/client.context";
 import styled from "@emotion/styled";
 
 const Container = styled("div")`
@@ -50,7 +49,7 @@ const Document = withEmotionCache(
 
       // reset cache to re-apply global styles
       clientStyleData.reset();
-    }, []);
+    }, [clientStyleData, emotionCache.sheet]);
 
     return (
       <html lang="en">
