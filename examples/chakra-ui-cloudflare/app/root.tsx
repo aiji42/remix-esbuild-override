@@ -1,31 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import type { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import {
-  Outlet,
-  Meta,
   Links,
+  LiveReload,
+  Meta,
+  Outlet,
   Scripts,
   ScrollRestoration,
-  LiveReload,
-  useCatch,
 } from "@remix-run/react";
-import { MetaFunction, LinksFunction } from "@remix-run/cloudflare";
+import { ServerStyleContext, ClientStyleContext } from "~/context";
 import { withEmotionCache } from "@emotion/react";
-import { Box, ChakraProvider, Heading } from "@chakra-ui/react";
-import { ServerStyleContext, ClientStyleContext } from "./styles/context";
+import { useContext, useEffect } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Remix with Chakra-ui",
+  title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
 });
 
-export const links: LinksFunction = () => {
+export let links: LinksFunction = () => {
   return [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
-    {
-      rel: "preconnect",
-      href: "https://fonts.gstaticom",
-    },
+    { rel: "preconnect", href: "https://fonts.gstatic.com" },
     {
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap",
@@ -35,11 +31,10 @@ export const links: LinksFunction = () => {
 
 interface DocumentProps {
   children: React.ReactNode;
-  title?: string;
 }
 
 const Document = withEmotionCache(
-  ({ children, title }: DocumentProps, emotionCache) => {
+  ({ children }: DocumentProps, emotionCache) => {
     const serverStyleData = useContext(ServerStyleContext);
     const clientStyleData = useContext(ClientStyleContext);
 
@@ -60,7 +55,6 @@ const Document = withEmotionCache(
     return (
       <html lang="en">
         <head>
-          {title ? <title>{title}</title> : null}
           <Meta />
           <Links />
           {serverStyleData?.map(({ key, ids, css }) => (
@@ -87,36 +81,6 @@ export default function App() {
     <Document>
       <ChakraProvider>
         <Outlet />
-      </ChakraProvider>
-    </Document>
-  );
-}
-
-export function CatchBoundary() {
-  const caught = useCatch();
-
-  return (
-    <Document title={`${caught.status} ${caught.statusText}`}>
-      <ChakraProvider>
-        <Box>
-          <Heading as="h1" bg="purple.600">
-            [CatchBoundary]: {caught.status} {caught.statusText}
-          </Heading>
-        </Box>
-      </ChakraProvider>
-    </Document>
-  );
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  return (
-    <Document title="Error!">
-      <ChakraProvider>
-        <Box>
-          <Heading as="h1" bg="blue.500">
-            [ErrorBoundary]: There was an error: {error.message}
-          </Heading>
-        </Box>
       </ChakraProvider>
     </Document>
   );
