@@ -72,11 +72,8 @@ module.exports = {
 - [emotion (styled) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-cloudflare)
 - [emotion (css props) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-css-props-cloudflare)
 - [Chakra UI on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/chakra-ui-cloudflare)
-- [Mantine on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/mantine-cloudflare)
-- [linaria](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/linaria)
-- [remix-validated-form on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/remix-validated-form-cloudflare)
-- [Prisma on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/prisma-cloudflare)
-- [Vanilla extract](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/vanilla-extract)
+- [Chakra UI on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/styled-components)
+
 
 If you have other example requests, please create an issue. Additional pull requests for examples are also welcome.
 
