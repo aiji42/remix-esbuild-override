@@ -1,4 +1,6 @@
-# Remix with [emotion](https://emotion.sh/docs/introduction) (styled) on Cloudflare
+# Remix with [emotion](https://emotion.sh/docs/introduction) on Cloudflare
+
+This example also supports css props ✌️
 
 The base template is [here](https://github.com/remix-run/examples/tree/main/emotion), and the configuration under the app directory is the same as this one.  
 This example is for Cloudflare Workers, but it is basically the same for Cloudflare Pages.

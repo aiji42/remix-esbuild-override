@@ -69,11 +69,9 @@ module.exports = {
 
 ### Examples
 
-- [emotion (styled) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-cloudflare)
-- [emotion (css props) on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-css-props-cloudflare)
+- [emotion on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-cloudflare)
 - [Chakra UI on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/chakra-ui-cloudflare)
-- [Chakra UI on Cloudflare](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/styled-components)
-
+- [Styled componets](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/styled-components)
 
 If you have other example requests, please create an issue. Additional pull requests for examples are also welcome.
 
