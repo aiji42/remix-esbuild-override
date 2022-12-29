@@ -13,6 +13,9 @@ export default function Index() {
       <h1>Welcome to Remix with Emotion Example</h1>
       <ul>
         <li>
+          <Link to="/use-css-props">Using css props</Link>
+        </li>
+        <li>
           <Link to="/jokes">Jokes</Link>
         </li>
         <li>

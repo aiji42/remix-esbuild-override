@@ -27,7 +27,17 @@ Update `scripts > postinstall` in package.json.
 
 **Run `npm install` or `yarn install` again to run `postinstall`.**
 
-2. Update remix.config.js
+2. Update tsconfig.json
+
+This step is only required if `css` props is used.
+
+```
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react", // <= this line
+    "moduleResolution": "node",
+```
+
+3. Update remix.config.js
 
 ```js
 const { withEsbuildOverride } = require("remix-esbuild-override");

@@ -5,6 +5,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "ES2019",
