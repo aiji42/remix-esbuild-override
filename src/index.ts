@@ -1,4 +1,4 @@
-import { BuildOptions, build } from "esbuild";
+import type { BuildOptions, build, context } from "esbuild";
 import { load } from "./utils";
 import { mods } from "./constants";
 
@@ -41,7 +41,11 @@ export const withEsbuildOverride = (esbuildOverride?: EsbuildOverride) => {
   _esbuildOverride = esbuildOverride;
 
   for (const mod of mods) {
-    const esbuild = load<{ overridden?: boolean; build: typeof build }>(mod);
+    const esbuild = load<{
+      overridden?: boolean;
+      build: typeof build;
+      context: typeof context;
+    }>(mod);
     if (!esbuild) continue;
 
     if (esbuild.overridden) break;
