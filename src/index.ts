@@ -46,10 +46,17 @@ export const withEsbuildOverride = (esbuildOverride?: EsbuildOverride) => {
 
     if (esbuild.overridden) break;
     const originalBuildFunction = esbuild.build;
+    const originalContextFunction = esbuild.context;
     try {
       Object.defineProperty(esbuild, "build", {
         get: () => (option: EsbuildOption) => {
           return originalBuildFunction(esbuildOverrideOption(option));
+        },
+        enumerable: true,
+      });
+      Object.defineProperty(esbuild, "context", {
+        get: () => (option: EsbuildOption) => {
+          return originalContextFunction(esbuildOverrideOption(option));
         },
         enumerable: true,
       });
