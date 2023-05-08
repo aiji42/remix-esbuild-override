@@ -6,9 +6,20 @@ withEsbuildOverride((option) => {
   return option;
 });
 
-require("esbuild").build({
-  entryPoints: ["app.jsx"],
-  bundle: true,
-  minify: true,
-  outfile: "out.js",
-});
+const main = async () => {
+  await require("esbuild").build({
+    entryPoints: ["app.jsx"],
+    bundle: true,
+    minify: true,
+    outfile: "out.js",
+  });
+
+  await require("esbuild").context({
+    entryPoints: ["app.jsx"],
+    bundle: true,
+    minify: true,
+    outfile: "out.js",
+  });
+};
+
+main();

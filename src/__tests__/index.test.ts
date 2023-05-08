@@ -1,6 +1,6 @@
 import { withEsbuildOverride, esbuildOverrideOption } from "../index";
 import * as utils from "../utils";
-import { describe, test } from "vitest";
+import { beforeEach, describe, test } from "vitest";
 
 vi.mock("../utils");
 
@@ -75,7 +75,9 @@ describe("index", () => {
   describe("withEsbuildOverride", () => {
     let esbuild: any;
     let mockedBuildFunction = vi.fn();
-    beforeAll(() => {
+    let mockedContextFunction = vi.fn();
+    beforeEach(() => {
+      esbuild = undefined;
       vi.spyOn(utils, "load").mockImplementation((mod) => {
         if (mod === "@remix-run/dev/node_modules/esbuild") return esbuild;
         return null;
@@ -97,15 +99,38 @@ describe("index", () => {
       expect(esbuild.overridden).toEqual(true);
     });
 
+    test("override esbuild.context", () => {
+      esbuild = { context: mockedContextFunction };
+      withEsbuildOverride((option) => {
+        option.jsxFactory = "jsx";
+        return option;
+      });
+      esbuild.context({ foo: "bar" });
+
+      expect(mockedContextFunction).toBeCalledWith({
+        foo: "bar",
+        jsxFactory: "jsx",
+      });
+      expect(esbuild.overridden).toEqual(true);
+    });
+
     test("esbuild has already been overwritten", () => {
-      esbuild = { build: mockedBuildFunction, overridden: true };
+      esbuild = {
+        build: mockedBuildFunction,
+        context: mockedContextFunction,
+        overridden: true,
+      };
       withEsbuildOverride((option) => {
         option.jsxFactory = "jsx";
         return option;
       });
       esbuild.build({ foo: "bar" });
+      esbuild.context({ foo: "bar" });
 
       expect(mockedBuildFunction).toBeCalledWith({
+        foo: "bar",
+      });
+      expect(mockedContextFunction).toBeCalledWith({
         foo: "bar",
       });
       expect(esbuild.overridden).toEqual(true);
