@@ -14,12 +14,13 @@ const main = async () => {
     outfile: "out.js",
   });
 
-  await require("esbuild").context({
+  const res = await require("esbuild").context({
     entryPoints: ["app.jsx"],
     bundle: true,
     minify: true,
     outfile: "out.js",
   });
+  await res.dispose();
 };
 
-main();
+main().catch(() => process.exit(1));
